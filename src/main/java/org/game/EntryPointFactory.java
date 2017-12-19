@@ -2,6 +2,7 @@ package org.game;
 
 import org.game.common.mvp.Presenter;
 import org.game.map.MapFactory;
+import org.game.map.factory.StaticMapFactory;
 import org.game.menu.MainMainMenuConsoleConsoleView;
 import org.game.menu.MainMenuPresenter;
 import org.game.play.GameFactory;
@@ -25,6 +26,6 @@ public class EntryPointFactory {
     }
 
     private static MapFactory mapFactory() {
-        return null;
+        return new StaticMapFactory();
     }
 }
