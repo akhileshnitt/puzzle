@@ -2,6 +2,8 @@ package org.game;
 
 import org.game.common.mvp.Presenter;
 import org.game.map.MapFactory;
+import org.game.map.behaviour.user.UserMovementConsoleInput;
+import org.game.map.behaviour.user.UserMovementInput;
 import org.game.map.entities.character.NewCharacterConsoleConsoleView;
 import org.game.map.entities.character.NewCharacterPresenter;
 import org.game.map.factory.StaticMapFactory;
@@ -29,7 +31,11 @@ public class EntryPointFactory {
     }
 
     private static MapFactory mapFactory() {
-        return new StaticMapFactory(characterPresenter());
+        return new StaticMapFactory(characterPresenter(),userMovementInput());
+    }
+
+    private static UserMovementInput userMovementInput() {
+        return new UserMovementConsoleInput();
     }
 
 

@@ -21,6 +21,11 @@ public class GameCharacter extends SimpleEntity {
     }
 
 
+    @Override
+    public boolean isUser() {
+        return isUserCharacter;
+    }
+
     public boolean isUserCharacter() {
         return isUserCharacter;
     }

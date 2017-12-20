@@ -55,6 +55,11 @@ public class SimpleEntity implements Entity{
     }
 
     @Override
+    public boolean containUserCharacter() {
+        return getInnerEntity().filter(entity -> entity.isUser()||entity.containUserCharacter()).isPresent();
+    }
+
+    @Override
     public void take(Entity anotherEntity) {
         throw new UnsupportedOperationException("This method is not supported.");
     }

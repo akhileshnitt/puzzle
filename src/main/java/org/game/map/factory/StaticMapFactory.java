@@ -4,6 +4,8 @@ import org.game.map.GameMap;
 import org.game.map.GameMapBuilder;
 import org.game.map.MainGameMap;
 import org.game.map.MapFactory;
+import org.game.map.behaviour.user.UserMovementConsoleInput;
+import org.game.map.behaviour.user.UserMovementInput;
 import org.game.map.entities.Entity;
 import org.game.map.entities.character.NewCharacterFactory;
 
@@ -19,10 +21,12 @@ public class StaticMapFactory implements MapFactory{
 
 
     private final NewCharacterFactory newCharacterFactory;
+    private final UserMovementInput userMovementInput;
 
 
-    public StaticMapFactory(NewCharacterFactory newCharacterFactory) {
+    public StaticMapFactory(NewCharacterFactory newCharacterFactory, UserMovementInput userMovementInput) {
         this.newCharacterFactory = newCharacterFactory;
+        this.userMovementInput = userMovementInput;
     }
 
     @Override
@@ -31,7 +35,7 @@ public class StaticMapFactory implements MapFactory{
     }
 
     private GameMap create(List<List<Entity>> entities) {
-        return new MainGameMap(entities);
+        return new MainGameMap(entities,userMovementInput);
     }
 
     private List<List<Entity>> entities(Entity character) {

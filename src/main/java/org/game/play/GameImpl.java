@@ -15,6 +15,9 @@ public class GameImpl implements Game {
     public void start() {
         gameView.draw(gameMap);
 
+        gameMap.goToNextIteration();
+        gameView.draw(gameMap);
+
         // logic to start game and declared winner
 
     }

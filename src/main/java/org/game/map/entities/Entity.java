@@ -20,4 +20,6 @@ public interface Entity {
     Optional<Entity> getInnerEntity();
 
     boolean containAnotherEntity();
+
+    boolean containUserCharacter();
 }
