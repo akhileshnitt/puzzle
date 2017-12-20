@@ -1,5 +1,7 @@
 package org.game.map.entities;
 
+import java.util.Optional;
+
 public class SimpleEntity implements Entity{
 
     private String name;
@@ -34,6 +36,21 @@ public class SimpleEntity implements Entity{
 
     @Override
     public boolean isAlive() {
+        return false;
+    }
+
+    @Override
+    public Optional<Entity> getInnerEntity() {
+        return Optional.empty();
+    }
+
+    @Override
+    public EntityType getType() {
+        return type;
+    }
+
+    @Override
+    public boolean containAnotherEntity() {
         return false;
     }
 

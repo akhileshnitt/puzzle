@@ -46,4 +46,9 @@ public final class EntityFactory {
     public static Entity character(String name, Race race, Sex sex, int attackPower) {
         return new GameCharacter(name, false, race, sex, attackPower);
     }
+
+
+    public static  Entity userCharacter(String name, Race race, Sex sex) {
+        return new GameCharacter(name, true, race, sex, 50);
+    }
 }

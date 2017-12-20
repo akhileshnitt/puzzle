@@ -17,7 +17,6 @@ public class MainMenuPresenter extends AbstractPresenter<MainMenuView>  implemen
 
     @Override
     public void onStartChosen() {
-
         gameFactory.create().start();
     }
 

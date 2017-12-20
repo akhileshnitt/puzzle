@@ -13,6 +13,7 @@ public class GameImpl implements Game {
 
     @Override
     public void start() {
+        gameView.draw(gameMap);
 
         // logic to start game and declared winner
 

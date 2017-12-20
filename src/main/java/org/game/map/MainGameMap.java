@@ -7,7 +7,10 @@ import java.util.List;
 public class MainGameMap implements GameMap{
 
 
+    private final List<List<Entity>> entities;
+
     public MainGameMap(List<List<Entity>> entities) {
+        this.entities =entities;
     }
 
     @Override
@@ -23,5 +26,10 @@ public class MainGameMap implements GameMap{
     @Override
     public void goToNextIteration() {
 
+    }
+
+    @Override
+    public List<List<Entity>> getEntities() {
+        return entities;
     }
 }

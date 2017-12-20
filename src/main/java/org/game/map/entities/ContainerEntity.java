@@ -1,7 +1,9 @@
 package org.game.map.entities;
 
+import java.util.Optional;
+
 public class ContainerEntity extends SimpleEntity {
-    private String name;
+
     private Entity innerEntity;
 
 
@@ -13,5 +15,18 @@ public class ContainerEntity extends SimpleEntity {
     @Override
     public void take(Entity anotherEntity) {
         innerEntity = anotherEntity;
+    }
+
+
+
+    @Override
+    public Optional<Entity> getInnerEntity() {
+        return Optional.ofNullable(innerEntity);
+    }
+
+
+    @Override
+    public boolean containAnotherEntity() {
+        return getInnerEntity().isPresent();
     }
 }
