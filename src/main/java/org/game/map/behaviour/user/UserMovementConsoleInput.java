@@ -13,7 +13,7 @@ public class UserMovementConsoleInput implements UserMovementInput {
     public Position getNextPosition(Position currentPosition) {
        menu.draw();
         Movement movement = menu.chooseItem();
-      switch (menu.chooseItem()){
+      switch (movement){
           case UP:
               return Position.of(currentPosition.getLeft(),currentPosition.getTop()-1);
           case DOWN:

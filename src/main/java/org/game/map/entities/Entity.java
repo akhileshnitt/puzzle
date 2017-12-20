@@ -31,4 +31,6 @@ public interface Entity {
     Entity findEntity(Predicate<Entity> condition);
 
     void clear();
+
+    int isBeatenBy(Entity user);
 }

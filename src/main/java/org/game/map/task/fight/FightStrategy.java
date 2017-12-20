@@ -28,13 +28,16 @@ public class FightStrategy extends AbstractPresenter<FightView> implements TaskC
     private void nextIteration() {
         if(user.isAlive() && enemy.isAlive() ){
             view.drawUser(user);
-            view.drawUser(enemy);
+            view.drawEnemy(enemy);
             show();
         }
     }
 
     @Override
     public void onUserAttack() {
+
+        view.drawAttack(user, enemy, enemy.isBeatenBy(user));
+        nextIteration();
 
     }
 

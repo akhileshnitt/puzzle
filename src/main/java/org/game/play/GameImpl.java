@@ -15,9 +15,18 @@ public class GameImpl implements Game {
     public void start() {
         gameView.draw(gameMap);
 
-        gameMap.goToNextIteration();
-        gameView.draw(gameMap);
+        while(gameMap.containsUserCharacter() || gameMap.containsTasks()) {
+            gameMap.goToNextIteration();
+            gameView.draw(gameMap);
+        }
 
+
+        if(gameMap.containsUserCharacter()){
+            System.out.println("you are winner");
+        }
+        else{
+            System.out.println("Game Over");
+        }
         // logic to start game and declared winner
 
     }

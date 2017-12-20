@@ -8,11 +8,13 @@ public class SimpleEntity implements Entity{
     private String name;
     private EntityType type;
     private int attachPower;
+    private int health;
 
     public SimpleEntity(String name, EntityType type, int attachPower) {
         this.name = name;
         this.type = type;
         this.attachPower = attachPower;
+        this.health = 100;
     }
 
     @Override
@@ -22,7 +24,7 @@ public class SimpleEntity implements Entity{
 
     @Override
     public int getHealth() {
-        return 0;
+        return health;
     }
 
     @Override
@@ -37,7 +39,7 @@ public class SimpleEntity implements Entity{
 
     @Override
     public boolean isAlive() {
-        return false;
+        return health>0;
     }
 
     @Override

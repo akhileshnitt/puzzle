@@ -49,7 +49,7 @@ public class EntryPointFactory {
 
     private static Predicate<Entity> taskDetectionCondition(){
         Set<EntityType> enemies = EnumSet.of(EntityType.CHARACTER,EntityType.BEAR,EntityType.WOLF);
-        return entity -> enemies.contains(entity);
+        return entity -> enemies.contains(entity.getType());
     }
 
     private static UserMovementInput userMovementInput() {

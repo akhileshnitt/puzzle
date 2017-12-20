@@ -16,7 +16,7 @@ import static java.util.stream.IntStream.range;
 public class MainGameMap implements GameMap{
 
 
-    private final List<List<Entity>> entities;
+    private  List<List<Entity>> entities;
     private UserMovementInput userMovementInput;
     private final Predicate<Entity> taskDetectionCondition;
     private final TaskCompletionStrategy taskCompletionStrategy;
@@ -31,12 +31,17 @@ public class MainGameMap implements GameMap{
 
     @Override
     public boolean containsUserCharacter() {
-        return false;
+        return entities().anyMatch(Entity::containUserCharacter);
+
+    }
+
+    private  Stream<Entity> entities() {
+        return entities.stream().flatMap(List::stream);
     }
 
     @Override
     public boolean containsTasks() {
-        return false;
+        return entities().anyMatch(entity -> entity.containTasks(taskDetectionCondition));
     }
 
     @Override
@@ -81,8 +86,8 @@ public class MainGameMap implements GameMap{
     }
 
     private boolean isValid(Position nextPosition, int maxCoordinate) {
-        return (nextPosition.getLeft() >0 && nextPosition.getLeft()<maxCoordinate)&&
-                (nextPosition.getTop()>0 && nextPosition.getTop()<maxCoordinate);
+        return (nextPosition.getLeft() >0 && nextPosition.getLeft()<=maxCoordinate)&&
+                (nextPosition.getTop()>0 && nextPosition.getTop()<=maxCoordinate);
     }
 
     private Optional<Position> findFirstEntity(Predicate<Entity> condition) {
