@@ -1,6 +1,7 @@
 package org.game.map.entities;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class SimpleEntity implements Entity{
 
@@ -60,7 +61,31 @@ public class SimpleEntity implements Entity{
     }
 
     @Override
+    public boolean canContainAnotherEntity() {
+        return false;
+    }
+
+    @Override
     public void take(Entity anotherEntity) {
         throw new UnsupportedOperationException("This method is not supported.");
+    }
+
+
+    @Override
+    public boolean containTasks(Predicate<Entity> condition) {
+        return condition.test(this) && !isUser()
+                ||getInnerEntity().filter(entity -> entity.containTasks(condition)).isPresent();
+    }
+
+
+    @Override
+    public Entity findEntity(Predicate<Entity> condition) {
+        return getInnerEntity().map(entity -> condition.test(entity)?entity:entity.findEntity(condition))
+                .orElseThrow(()->new IllegalStateException("There is no entities with such condition"));
+    }
+
+    @Override
+    public void clear() {
+        throw  new UnsupportedOperationException("this operation is not supported");
     }
 }

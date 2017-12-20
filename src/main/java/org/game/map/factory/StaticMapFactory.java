@@ -8,9 +8,11 @@ import org.game.map.behaviour.user.UserMovementConsoleInput;
 import org.game.map.behaviour.user.UserMovementInput;
 import org.game.map.entities.Entity;
 import org.game.map.entities.character.NewCharacterFactory;
+import org.game.map.task.TaskCompletionStrategy;
 
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import static org.game.map.GameMapBuilder.map;
 import static org.game.map.entities.EntityFactory.*;
@@ -22,11 +24,18 @@ public class StaticMapFactory implements MapFactory{
 
     private final NewCharacterFactory newCharacterFactory;
     private final UserMovementInput userMovementInput;
+    private final Predicate<Entity> taskDetectionCondition;
+    private final TaskCompletionStrategy taskCompletionStrategy;
 
 
-    public StaticMapFactory(NewCharacterFactory newCharacterFactory, UserMovementInput userMovementInput) {
+    public StaticMapFactory(NewCharacterFactory newCharacterFactory,
+                            UserMovementInput userMovementInput,
+                            Predicate<Entity> taskDetectionCondition,
+                            TaskCompletionStrategy taskCompletionStrategy) {
         this.newCharacterFactory = newCharacterFactory;
         this.userMovementInput = userMovementInput;
+        this.taskDetectionCondition = taskDetectionCondition;
+        this.taskCompletionStrategy = taskCompletionStrategy;
     }
 
     @Override
@@ -35,7 +44,7 @@ public class StaticMapFactory implements MapFactory{
     }
 
     private GameMap create(List<List<Entity>> entities) {
-        return new MainGameMap(entities,userMovementInput);
+        return new MainGameMap(entities,userMovementInput,taskDetectionCondition,taskCompletionStrategy);
     }
 
     private List<List<Entity>> entities(Entity character) {

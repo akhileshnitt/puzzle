@@ -1,6 +1,7 @@
 package org.game.map.entities;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public interface Entity {
     String getName();
@@ -22,4 +23,12 @@ public interface Entity {
     boolean containAnotherEntity();
 
     boolean containUserCharacter();
+
+    boolean canContainAnotherEntity();
+
+    boolean containTasks(Predicate<Entity> condition);
+
+    Entity findEntity(Predicate<Entity> condition);
+
+    void clear();
 }

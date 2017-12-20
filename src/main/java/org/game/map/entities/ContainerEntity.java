@@ -29,4 +29,15 @@ public class ContainerEntity extends SimpleEntity {
     public boolean containAnotherEntity() {
         return getInnerEntity().isPresent();
     }
+
+
+    @Override
+    public boolean canContainAnotherEntity() {
+        return true;
+    }
+
+    @Override
+    public void clear() {
+        innerEntity = null;
+    }
 }
