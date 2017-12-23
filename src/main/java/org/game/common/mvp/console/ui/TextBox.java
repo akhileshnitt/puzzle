@@ -1,5 +1,6 @@
 package org.game.common.mvp.console.ui;
 
+import org.game.common.mvp.console.ui.utils.AsciiHelper;
 import org.game.common.mvp.console.ui.utils.ConsoleReader;
 
 public class TextBox implements Component{
@@ -15,7 +16,7 @@ public class TextBox implements Component{
 
     @Override
     public void draw() {
-        System.out.println(title);
+        System.out.println(AsciiHelper.ANSI_CYAN+title+AsciiHelper.ANSI_RESET);
     }
 
     public String getValue() {

@@ -41,11 +41,16 @@ public class GameCharacter extends SimpleEntity {
 
     @Override
     public String toString() {
-        return "GameCharacter{" +
-                "isUserCharacter=" + isUserCharacter +
-                ", race=" + race +
-                ", sex=" + sex +
-                '}';
+        return "GameCharacter{"
+                + "name='" + getName() + '\''
+                + ", type=" + getType()
+                + ", isUserCharacter=" + isUserCharacter
+                + ", race=" + race
+                + ", sex=" + sex
+                + ", health=" + getHealth()
+                + ", attackPower=" + getAttackPower()
+                + ", defended=" + isDefended()
+                + '}';
     }
 
 

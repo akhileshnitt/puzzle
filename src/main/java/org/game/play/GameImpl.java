@@ -1,5 +1,6 @@
 package org.game.play;
 
+import org.game.common.mvp.console.ui.utils.AsciiHelper;
 import org.game.map.GameMap;
 
 public class GameImpl implements Game {
@@ -13,21 +14,22 @@ public class GameImpl implements Game {
 
     @Override
     public void start() {
+        // logic to start game and declared winner
         gameView.draw(gameMap);
 
-        while(gameMap.containsUserCharacter() || gameMap.containsTasks()) {
+        while(gameMap.containsUserCharacter() && gameMap.containsTasks()) {
             gameMap.goToNextIteration();
             gameView.draw(gameMap);
         }
 
 
         if(gameMap.containsUserCharacter()){
-            System.out.println("you are winner");
+            System.out.println(AsciiHelper.ANSI_BLUE + "!!!!!!!    You are winner !!!!!!!!!!"+AsciiHelper.ANSI_RESET);
         }
         else{
-            System.out.println("Game Over");
+            System.out.println(AsciiHelper.ANSI_RED+ "-----   Game Over   ----- "+AsciiHelper.ANSI_RESET);
         }
-        // logic to start game and declared winner
+
 
     }
 }

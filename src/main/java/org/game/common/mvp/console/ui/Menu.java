@@ -1,6 +1,7 @@
 package org.game.common.mvp.console.ui;
 
 
+import org.game.common.mvp.console.ui.utils.AsciiHelper;
 import org.game.common.mvp.console.ui.utils.ConsoleReader;
 
 import java.util.function.Function;
@@ -31,7 +32,7 @@ public class Menu<T extends  Enum> {
 
     public void draw() {
 
-        System.out.println(title);
+        System.out.println(AsciiHelper.ANSI_CYAN+title+AsciiHelper.ANSI_RESET);
         Stream.of(items).map(ENUM_TO_STRING).forEach(System.out::println);
     }
 
@@ -48,8 +49,8 @@ public class Menu<T extends  Enum> {
 
     private void printMenuFooter(boolean hasToPrintWarning) {
         if (hasToPrintWarning) {
-            System.out.println("Operation number is incorrect. Please, type correct one.");
+            System.out.println(AsciiHelper.ANSI_GREEN+"Operation number is incorrect. Please, type correct one."+AsciiHelper.ANSI_RESET);
         }
-        System.out.println("Put operation's number which you want to do:");
+        System.out.println(AsciiHelper.ANSI_GREEN+"Put operation's number which you want to do:"+AsciiHelper.ANSI_RESET);
     }
 }

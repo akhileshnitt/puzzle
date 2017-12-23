@@ -11,6 +11,7 @@ public interface Entity {
     int getAttackPower();
 
     boolean isUser();
+    boolean isDefended();
 
     boolean isAlive();
 
@@ -33,4 +34,8 @@ public interface Entity {
     void clear();
 
     int isBeatenBy(Entity user);
+
+    void relax();
+
+    void defense();
 }

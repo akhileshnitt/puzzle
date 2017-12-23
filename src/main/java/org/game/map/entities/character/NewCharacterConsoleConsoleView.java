@@ -15,7 +15,7 @@ public class NewCharacterConsoleConsoleView  extends AbstractConsoleView<NewChar
 
     @Override
     public void draw() {
-        System.out.println("New Character Menu");
+
 
         characterName.draw();
         delegate.onChosen(characterName.getValue());

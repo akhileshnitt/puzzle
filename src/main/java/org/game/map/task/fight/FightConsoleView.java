@@ -2,6 +2,7 @@ package org.game.map.task.fight;
 
 import org.game.common.mvp.console.AbstractConsoleView;
 import org.game.common.mvp.console.ui.Menu;
+import org.game.common.mvp.console.ui.utils.AsciiHelper;
 import org.game.map.entities.Entity;
 import org.game.map.entities.GameCharacter;
 
@@ -19,6 +20,7 @@ public class FightConsoleView extends AbstractConsoleView<FightView.ActionDelete
     }
 
     private void drawEntity(Entity entity) {
+
         if(entity instanceof GameCharacter){
             GameCharacter character = (GameCharacter) entity;
             System.out.println(format(
@@ -34,6 +36,7 @@ public class FightConsoleView extends AbstractConsoleView<FightView.ActionDelete
             ));
         }
 
+
     }
 
     @Override
@@ -44,6 +47,11 @@ public class FightConsoleView extends AbstractConsoleView<FightView.ActionDelete
 
     @Override
     public void drawAttack(Entity attacker, Entity defender, int damage) {
+
+        System.out.println(AsciiHelper.ANSI_RED+format(
+                "%s attacks %s. %s got a damage  :: %d",
+                attacker.getName(), defender.getName(), defender.getName(), damage
+        )+AsciiHelper.ANSI_RESET);
 
     }
 

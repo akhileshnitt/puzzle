@@ -9,12 +9,14 @@ public class SimpleEntity implements Entity{
     private EntityType type;
     private int attachPower;
     private int health;
+    private boolean defended;
 
     public SimpleEntity(String name, EntityType type, int attachPower) {
         this.name = name;
         this.type = type;
         this.attachPower = attachPower;
         this.health = 100;
+        defended = false;
     }
 
     @Override
@@ -35,6 +37,11 @@ public class SimpleEntity implements Entity{
     @Override
     public boolean isUser() {
         return false;
+    }
+
+    @Override
+    public boolean isDefended() {
+        return defended;
     }
 
     @Override
@@ -89,5 +96,32 @@ public class SimpleEntity implements Entity{
     @Override
     public void clear() {
         throw  new UnsupportedOperationException("this operation is not supported");
+    }
+
+    @Override
+    public int isBeatenBy(Entity anotherEntity) {
+        if (defended) {
+            defended = false;
+            return 0;
+        }
+        int anotherEntityAttackPower = anotherEntity.getAttackPower();
+        if(health>= anotherEntityAttackPower){
+            health = health - anotherEntityAttackPower;
+            return anotherEntityAttackPower;
+        }
+        int oldHealth = health;
+        health = 0;
+        return  oldHealth;
+    }
+
+    @Override
+    public void relax() {
+        defended = false;
+        getInnerEntity().ifPresent(Entity::relax);
+    }
+
+    @Override
+    public void defense() {
+        defended = true;
     }
 }
