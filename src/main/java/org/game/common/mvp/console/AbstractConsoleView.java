@@ -12,8 +12,6 @@ public abstract  class AbstractConsoleView<T> implements View<T> {
 
     }
 
-
-
     @Override
     public void erase() {
 

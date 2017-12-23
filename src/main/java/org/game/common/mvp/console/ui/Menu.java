@@ -3,11 +3,13 @@ package org.game.common.mvp.console.ui;
 
 import org.game.common.mvp.console.ui.utils.AsciiHelper;
 import org.game.common.mvp.console.ui.utils.ConsoleReader;
+import org.game.map.utils.IntRange;
 
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class Menu<T extends  Enum> {
+public class Menu<T extends  Enum> implements Component {
 
     private static final int MENU_ITEM_OFFSET = 1;
 
@@ -16,6 +18,7 @@ public class Menu<T extends  Enum> {
     private final String title;
 
     private final T[] items;
+    private final IntRange acceptableItems;
 
     private final ConsoleReader reader = new ConsoleReader();
 
@@ -26,7 +29,7 @@ public class Menu<T extends  Enum> {
         this.title = title;
         this.items = items;
 
- //       this.acceptableItems = IntRange.of(1, items.length);
+        this.acceptableItems = IntRange.of(1, items.length);
     }
 
 
@@ -44,7 +47,7 @@ public class Menu<T extends  Enum> {
     }
 
     private int readItemIndex() {
-       return reader.readIntegerUntil() - MENU_ITEM_OFFSET;
+        return reader.readIntegerUntil(itemIsInAcceptableRange(), redrawWithWarningMessage) - MENU_ITEM_OFFSET;
     }
 
     private void printMenuFooter(boolean hasToPrintWarning) {
@@ -53,4 +56,14 @@ public class Menu<T extends  Enum> {
         }
         System.out.println(AsciiHelper.ANSI_GREEN+"Put operation's number which you want to do:"+AsciiHelper.ANSI_RESET);
     }
+
+
+    private Predicate<String> itemIsInAcceptableRange() {
+        return line -> acceptableItems.contains(Integer.parseInt(line));
+    }
+
+    private final Runnable redrawWithWarningMessage = () -> {
+        redraw();
+        printMenuFooter(true);
+    };
 }

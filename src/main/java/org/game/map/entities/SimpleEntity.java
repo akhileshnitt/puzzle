@@ -7,14 +7,14 @@ public class SimpleEntity implements Entity{
 
     private String name;
     private EntityType type;
-    private int attachPower;
+    private int attackPower;
     private int health;
     private boolean defended;
 
     public SimpleEntity(String name, EntityType type, int attachPower) {
         this.name = name;
         this.type = type;
-        this.attachPower = attachPower;
+        this.attackPower = attachPower;
         this.health = 100;
         defended = false;
     }
@@ -31,7 +31,7 @@ public class SimpleEntity implements Entity{
 
     @Override
     public int getAttackPower() {
-        return attachPower;
+        return attackPower;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class SimpleEntity implements Entity{
 
     @Override
     public void clear() {
-        throw  new UnsupportedOperationException("this operation is not supported");
+        throw  new UnsupportedOperationException("This operation is not supported");
     }
 
     @Override
