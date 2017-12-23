@@ -9,4 +9,4 @@ gradle-app.setting
 *.iml
 .settings
 
-!build/reports/tests/test/index.html
+!build/reports/tests/test
