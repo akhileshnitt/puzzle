@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FightStrategy.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">puzzle</a> &gt; <a href="index.source.html" class="el_package">org.game.map.task.fight</a> &gt; <span class="el_source">FightStrategy.java</span></div><h1>FightStrategy.java</h1><pre class="source lang-java linenums">package org.game.map.task.fight;
+
+import org.game.common.mvp.AbstractPresenter;
+import org.game.common.mvp.console.ui.utils.AsciiHelper;
+import org.game.map.entities.Entity;
+import org.game.map.task.TaskCompletionStrategy;
+
+public class FightStrategy extends AbstractPresenter&lt;FightView&gt; implements TaskCompletionStrategy,FightView.ActionDeletegate {
+
+
+    private  Entity user;
+    private Entity enemy;
+
+
+
+    public FightStrategy(FightView view) {
+<span class="nc" id="L17">        super(view);</span>
+<span class="nc" id="L18">        this.view.setDelegate(this);</span>
+<span class="nc" id="L19">    }</span>
+
+    @Override
+    public void complete(Entity user, Entity enemy) {
+<span class="nc" id="L23">        this.user = user;</span>
+<span class="nc" id="L24">        this.enemy = enemy;</span>
+<span class="nc" id="L25">        nextIteration();</span>
+
+<span class="nc" id="L27">    }</span>
+
+    private void nextIteration() {
+
+<span class="nc bnc" id="L31" title="All 4 branches missed.">        if(user.isAlive() &amp;&amp; enemy.isAlive() ){</span>
+<span class="nc" id="L32">            System.out.println();</span>
+<span class="nc" id="L33">            view.drawUser(user);</span>
+<span class="nc" id="L34">            view.drawEnemy(enemy);</span>
+<span class="nc" id="L35">            System.out.println();</span>
+<span class="nc" id="L36">            show();</span>
+        }
+<span class="nc" id="L38">    }</span>
+
+    @Override
+    public void onUserAttack() {
+<span class="nc" id="L42">        System.out.println();</span>
+<span class="nc" id="L43">        System.out.println(AsciiHelper.ANSI_YELLOW+&quot;///////////////////////////////////////////&quot;+AsciiHelper.ANSI_RESET);</span>
+
+<span class="nc" id="L45">        view.drawAttack(user, enemy, enemy.isBeatenBy(user));</span>
+<span class="nc" id="L46">        view.drawAttack(enemy,user,user.isBeatenBy(enemy));</span>
+<span class="nc" id="L47">        System.out.println(AsciiHelper.ANSI_YELLOW+&quot;///////////////////////////////////////////&quot;+AsciiHelper.ANSI_RESET);</span>
+<span class="nc" id="L48">        System.out.println();</span>
+
+<span class="nc" id="L50">        nextIteration();</span>
+
+<span class="nc" id="L52">    }</span>
+
+    @Override
+    public void onUserDefend() {
+<span class="nc" id="L56">        user.defense();</span>
+<span class="nc" id="L57">        view.drawAttack(enemy, user, user.isBeatenBy(enemy));</span>
+<span class="nc" id="L58">        nextIteration();</span>
+<span class="nc" id="L59">    }</span>
+
+    @Override
+    public void onDoNothing() {
+<span class="nc" id="L63">        view.drawAttack(enemy, user, user.isBeatenBy(enemy));</span>
+<span class="nc" id="L64">        nextIteration();</span>
+<span class="nc" id="L65">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

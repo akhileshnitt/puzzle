@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MainGameMap.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">puzzle</a> &gt; <a href="index.source.html" class="el_package">org.game.map</a> &gt; <span class="el_source">MainGameMap.java</span></div><h1>MainGameMap.java</h1><pre class="source lang-java linenums">package org.game.map;
+
+import org.game.map.behaviour.user.UserMovementInput;
+import org.game.map.entities.Entity;
+import org.game.map.task.TaskCompletionStrategy;
+import org.game.map.utils.IntRange;
+import org.game.map.utils.Position;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static java.util.stream.IntStream.range;
+
+public class MainGameMap implements GameMap{
+
+
+    private  List&lt;List&lt;Entity&gt;&gt; entities;
+    private UserMovementInput userMovementInput;
+    private final Predicate&lt;Entity&gt; taskDetectionCondition;
+    private final TaskCompletionStrategy taskCompletionStrategy;
+
+    public MainGameMap(List&lt;List&lt;Entity&gt;&gt; entities, UserMovementInput userMovementInput,Predicate&lt;Entity&gt; taskDetectionCondition,
+<span class="nc" id="L26">                       TaskCompletionStrategy taskCompletionStrategy) {</span>
+<span class="nc" id="L27">        this.entities =entities;</span>
+<span class="nc" id="L28">        this.userMovementInput = userMovementInput;</span>
+<span class="nc" id="L29">        this.taskDetectionCondition = taskDetectionCondition;</span>
+<span class="nc" id="L30">        this.taskCompletionStrategy = taskCompletionStrategy;</span>
+<span class="nc" id="L31">    }</span>
+
+    @Override
+    public boolean containsUserCharacter() {
+<span class="nc" id="L35">        return entities().anyMatch(Entity::containUserCharacter);</span>
+    }
+
+    @Override
+    public boolean containsTasks() {
+<span class="nc" id="L40">        return entities().anyMatch(entity -&gt; entity.containTasks(taskDetectionCondition));</span>
+    }
+
+    private Stream&lt;Entity&gt; entities() {
+<span class="nc" id="L44">        return entities.stream().flatMap(List::stream);</span>
+    }
+
+    @Override
+    public void goToNextIteration() {
+<span class="nc" id="L49">        Position currentPosition = findFirstEntity(Entity::containUserCharacter)</span>
+<span class="nc" id="L50">                .orElseThrow(() -&gt; new IllegalStateException(&quot;It is impossible to continue game when no user character on the map&quot;));</span>
+<span class="nc" id="L51">        Position nextPosition = userMovementInput.getNextPosition(currentPosition);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (isValid(nextPosition, entities.size() - 1)) {</span>
+<span class="nc" id="L53">            moveUser(currentPosition, nextPosition);</span>
+        }
+<span class="nc" id="L55">        entities().forEach(Entity::relax);</span>
+<span class="nc" id="L56">    }</span>
+
+    private Optional&lt;Position&gt; findFirstEntity(Predicate&lt;Entity&gt; condition) {
+<span class="nc" id="L59">        return range(0, entities.size())</span>
+<span class="nc" id="L60">                .boxed()</span>
+<span class="nc" id="L61">                .flatMap(top -&gt; zip(top, findEntityIndex(entities.get(top), condition)))</span>
+<span class="nc" id="L62">                .findFirst();</span>
+    }
+
+    private IntStream findEntityIndex(List&lt;Entity&gt; entities, Predicate&lt;Entity&gt; condition) {
+<span class="nc" id="L66">        return range(0, entities.size()).filter(left -&gt; condition.test(entities.get(left)));</span>
+    }
+
+    private Stream&lt;Position&gt; zip(int top, IntStream leftCoordinates) {
+<span class="nc" id="L70">        return leftCoordinates.mapToObj(left -&gt; Position.of(left, top));</span>
+    }
+
+    private boolean isValid(Position position, int maxCoordinate) {
+<span class="nc" id="L74">        IntRange correctCoordinate = IntRange.of(0, maxCoordinate);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        return correctCoordinate.contains(position.getLeft())</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                &amp;&amp; correctCoordinate.contains(position.getTop());</span>
+    }
+
+    private void moveUser(Position currentPosition, Position nextPosition) {
+<span class="nc" id="L80">        Entity containerEntity = entityOn(currentPosition);</span>
+<span class="nc" id="L81">        Entity newContainerEntity = entityOn(nextPosition);</span>
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (!newContainerEntity.canContainAnotherEntity()) {</span>
+<span class="nc" id="L84">            return;</span>
+        }
+
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (newContainerEntity.containTasks(taskDetectionCondition)) {</span>
+<span class="nc" id="L88">            Entity userCharacter = containerEntity.findEntity(Entity::isUser);</span>
+<span class="nc" id="L89">            Entity taskEntity = newContainerEntity.findEntity(taskDetectionCondition);</span>
+
+<span class="nc" id="L91">            taskCompletionStrategy.complete(userCharacter, taskEntity);</span>
+        }
+
+<span class="nc" id="L94">        containerEntity.getInnerEntity().ifPresent(userCharacter -&gt; {</span>
+<span class="nc" id="L95">            containerEntity.clear();</span>
+<span class="nc" id="L96">            newContainerEntity.take(userCharacter);</span>
+<span class="nc" id="L97">        });</span>
+
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (!isUserAlive(newContainerEntity)) {</span>
+<span class="nc" id="L100">            newContainerEntity.clear();</span>
+        }
+<span class="nc" id="L102">    }</span>
+
+    private Entity entityOn(Position position) {
+<span class="nc" id="L105">        return entities.get(position.getTop()).get(position.getLeft());</span>
+    }
+
+    private boolean isUserAlive(Entity entity) {
+<span class="nc" id="L109">        return entity.findEntity(Entity::isUser).isAlive();</span>
+    }
+
+    @Override
+    public List&lt;List&lt;Entity&gt;&gt; getEntities() {
+<span class="nc" id="L114">        return entities;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="play.GameImplSpec" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-12-24T10:10:22" hostname="8c85904d6ba6" time="0.021">
+  <properties/>
+  <testcase name="game should end when no user character on map " classname="play.GameImplSpec" time="0.019"/>
+  <testcase name="game should end when no task to complete on map" classname="play.GameImplSpec" time="0.002"/>
+  <system-out><![CDATA[?[31m-----   Game Over   ----- ?[0m
+?[34m!!!!!!!    You are winner !!!!!!!!!!?[0m
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

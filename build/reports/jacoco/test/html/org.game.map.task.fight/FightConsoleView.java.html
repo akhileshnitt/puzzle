@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FightConsoleView.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">puzzle</a> &gt; <a href="index.source.html" class="el_package">org.game.map.task.fight</a> &gt; <span class="el_source">FightConsoleView.java</span></div><h1>FightConsoleView.java</h1><pre class="source lang-java linenums">package org.game.map.task.fight;
+
+import org.game.common.mvp.console.AbstractConsoleView;
+import org.game.common.mvp.console.ui.Menu;
+import org.game.common.mvp.console.ui.utils.AsciiHelper;
+import org.game.map.entities.Entity;
+import org.game.map.entities.GameCharacter;
+
+import static java.lang.String.format;
+
+<span class="nc" id="L11">public class FightConsoleView extends AbstractConsoleView&lt;FightView.ActionDeletegate&gt; implements FightView {</span>
+
+<span class="nc" id="L13">   private static final Menu&lt;FightAction&gt; fightMenu = new Menu&lt;FightAction&gt;(&quot;Choose your action:&quot;, FightAction.values());</span>
+
+
+    @Override
+    public void drawUser(Entity user) {
+<span class="nc" id="L18">        drawEntity(user);</span>
+
+<span class="nc" id="L20">    }</span>
+
+    private void drawEntity(Entity entity) {
+
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if(entity instanceof GameCharacter){</span>
+<span class="nc" id="L25">            GameCharacter character = (GameCharacter) entity;</span>
+<span class="nc" id="L26">            System.out.println(format(</span>
+                    &quot;Name: %s; Race: %s; Sex: %s; Health: %d; Attack power: %d&quot;,
+<span class="nc" id="L28">                    character.getName(), character.getRace(), character.getSex(), character.getHealth(), character.getAttackPower()</span>
+
+            ));
+<span class="nc" id="L31">        }</span>
+        else{
+<span class="nc" id="L33">            System.out.println(format(</span>
+                    &quot;Name: %s; Type: %s; Health: %d; Attack power: %d&quot;,
+<span class="nc" id="L35">                    entity.getName(), entity.getType(), entity.getHealth(), entity.getAttackPower()</span>
+            ));
+        }
+
+
+<span class="nc" id="L40">    }</span>
+
+    @Override
+    public void drawEnemy(Entity enemy) {
+<span class="nc" id="L44">        drawEntity(enemy);</span>
+<span class="nc" id="L45">    }</span>
+
+
+    @Override
+    public void drawAttack(Entity attacker, Entity defender, int damage) {
+
+<span class="nc" id="L51">        System.out.println(AsciiHelper.ANSI_RED+format(</span>
+                &quot;%s attacks %s. %s got a damage  :: %d&quot;,
+<span class="nc" id="L53">                attacker.getName(), defender.getName(), defender.getName(), damage</span>
+        )+AsciiHelper.ANSI_RESET);
+
+<span class="nc" id="L56">    }</span>
+
+    @Override
+    public void draw() {
+<span class="nc" id="L60">        fightMenu.draw();</span>
+<span class="nc bnc" id="L61" title="All 4 branches missed.">        switch (fightMenu.chooseItem()){</span>
+            case BEAT:
+<span class="nc" id="L63">              delegate.onUserAttack();</span>
+<span class="nc" id="L64">              break;</span>
+            case DEFENCE:
+<span class="nc" id="L66">                delegate.onUserDefend();</span>
+<span class="nc" id="L67">              break;</span>
+            case DONOTHING:
+<span class="nc" id="L69">                delegate.onDoNothing();</span>
+<span class="nc" id="L70">              break;</span>
+            default:
+        }
+
+<span class="nc" id="L74">    }</span>
+
+
+<span class="nc" id="L77">    private enum FightAction{</span>
+<span class="nc" id="L78">        BEAT(&quot;Beat the opponent&quot;),</span>
+<span class="nc" id="L79">        DEFENCE(&quot;Defend yourself&quot;),</span>
+<span class="nc" id="L80">        DONOTHING(&quot;Do Nothing&quot;);</span>
+
+        private String title;
+
+<span class="nc" id="L84">        FightAction(String title) {</span>
+<span class="nc" id="L85">            this.title = title;</span>
+<span class="nc" id="L86">        }</span>
+
+        @Override
+        public String toString() {
+<span class="nc" id="L90">            return title;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

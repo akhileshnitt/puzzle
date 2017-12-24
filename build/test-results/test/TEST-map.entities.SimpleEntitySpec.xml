@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="map.entities.SimpleEntitySpec" tests="7" skipped="0" failures="0" errors="0" timestamp="2017-12-24T10:10:22" hostname="8c85904d6ba6" time="0.012">
+  <properties/>
+  <testcase name="constructor element should be set into fields and entity has default nehaviour" classname="map.entities.SimpleEntitySpec" time="0.004"/>
+  <testcase name="entity should not be able to contain another entity" classname="map.entities.SimpleEntitySpec" time="0.0"/>
+  <testcase name="UnsupportedOperationException should be thrown when take method is called" classname="map.entities.SimpleEntitySpec" time="0.002"/>
+  <testcase name="UnsupportedOperationException should be thrown when clear method is called" classname="map.entities.SimpleEntitySpec" time="0.0"/>
+  <testcase name="entity should be beaten by another entity" classname="map.entities.SimpleEntitySpec" time="0.002"/>
+  <testcase name="entity should be not in defended mode when it relaxes" classname="map.entities.SimpleEntitySpec" time="0.0"/>
+  <testcase name="entity should be not beaten when entity is in defended mode" classname="map.entities.SimpleEntitySpec" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

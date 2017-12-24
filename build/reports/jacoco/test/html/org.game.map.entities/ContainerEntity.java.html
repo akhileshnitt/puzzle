@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ContainerEntity.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">puzzle</a> &gt; <a href="index.source.html" class="el_package">org.game.map.entities</a> &gt; <span class="el_source">ContainerEntity.java</span></div><h1>ContainerEntity.java</h1><pre class="source lang-java linenums">package org.game.map.entities;
+
+import java.util.Optional;
+
+public class ContainerEntity extends SimpleEntity {
+
+    private Entity innerEntity;
+
+
+    public ContainerEntity(String name, EntityType type, int attachPower) {
+<span class="fc" id="L11">        super(name, type, attachPower);</span>
+<span class="fc" id="L12">    }</span>
+
+
+    @Override
+    public void take(Entity anotherEntity) {
+<span class="fc" id="L17">        innerEntity = anotherEntity;</span>
+<span class="fc" id="L18">    }</span>
+
+
+
+    @Override
+    public Optional&lt;Entity&gt; getInnerEntity() {
+<span class="fc" id="L24">        return Optional.ofNullable(innerEntity);</span>
+    }
+
+
+    @Override
+    public boolean containAnotherEntity() {
+<span class="fc" id="L30">        return getInnerEntity().isPresent();</span>
+    }
+
+
+    @Override
+    public boolean canContainAnotherEntity() {
+<span class="fc" id="L36">        return true;</span>
+    }
+
+    @Override
+    public void clear() {
+<span class="fc" id="L41">        innerEntity = null;</span>
+<span class="fc" id="L42">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

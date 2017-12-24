@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>EntryPointFactory.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">puzzle</a> &gt; <a href="index.source.html" class="el_package">org.game</a> &gt; <span class="el_source">EntryPointFactory.java</span></div><h1>EntryPointFactory.java</h1><pre class="source lang-java linenums">package org.game;
+
+import org.game.common.mvp.Presenter;
+import org.game.map.MapFactory;
+import org.game.map.behaviour.user.UserMovementConsoleInput;
+import org.game.map.behaviour.user.UserMovementInput;
+import org.game.map.entities.Entity;
+import org.game.map.entities.EntityType;
+import org.game.map.entities.character.NewCharacterConsoleConsoleView;
+import org.game.map.entities.character.NewCharacterPresenter;
+import org.game.map.factory.StaticMapFactory;
+import org.game.map.task.TaskCompletionStrategy;
+import org.game.map.task.fight.FightConsoleView;
+import org.game.map.task.fight.FightStrategy;
+import org.game.menu.MainMainMenuConsoleConsoleView;
+import org.game.menu.MainMenuPresenter;
+import org.game.play.GameConsoleView;
+import org.game.play.GameFactory;
+import org.game.play.GameFactoryImpl;
+import org.game.play.GameView;
+
+import java.util.EnumSet;
+import java.util.Set;
+import java.util.function.Predicate;
+
+public class EntryPointFactory {
+<span class="nc" id="L27">    private EntryPointFactory(){}</span>
+
+    public static Presenter newEntryPoint() {
+
+<span class="nc" id="L31">        return  new MainMenuPresenter(new MainMainMenuConsoleConsoleView(), gameFactory());</span>
+    }
+
+    private static GameFactory gameFactory() {
+<span class="nc" id="L35">        return new GameFactoryImpl(mapFactory(), gameView());</span>
+    }
+
+    private static GameView gameView() {
+<span class="nc" id="L39">        return new GameConsoleView();</span>
+    }
+
+    private static MapFactory mapFactory() {
+<span class="nc" id="L43">        return new StaticMapFactory(characterPresenter(),userMovementInput(), taskDetectionCondition(),taskCompletionStrategy());</span>
+    }
+
+    private static TaskCompletionStrategy taskCompletionStrategy() {
+<span class="nc" id="L47">        return new FightStrategy(new FightConsoleView());</span>
+    }
+
+    private static Predicate&lt;Entity&gt; taskDetectionCondition(){
+<span class="nc" id="L51">        Set&lt;EntityType&gt; enemies = EnumSet.of(EntityType.CHARACTER,EntityType.BEAR,EntityType.WOLF);</span>
+<span class="nc" id="L52">        return entity -&gt; enemies.contains(entity.getType());</span>
+    }
+
+    private static UserMovementInput userMovementInput() {
+<span class="nc" id="L56">        return new UserMovementConsoleInput();</span>
+    }
+
+
+    private static NewCharacterPresenter characterPresenter() {
+<span class="nc" id="L61">        return new NewCharacterPresenter(new NewCharacterConsoleConsoleView());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>SimpleEntity.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">puzzle</a> &gt; <a href="index.source.html" class="el_package">org.game.map.entities</a> &gt; <span class="el_source">SimpleEntity.java</span></div><h1>SimpleEntity.java</h1><pre class="source lang-java linenums">package org.game.map.entities;
+
+import java.util.Optional;
+import java.util.function.Predicate;
+
+public class SimpleEntity implements Entity{
+
+    private String name;
+    private EntityType type;
+    private int attackPower;
+    private int health;
+    private boolean defended;
+
+<span class="fc" id="L14">    public SimpleEntity(String name, EntityType type, int attachPower) {</span>
+<span class="fc" id="L15">        this.name = name;</span>
+<span class="fc" id="L16">        this.type = type;</span>
+<span class="fc" id="L17">        this.attackPower = attachPower;</span>
+<span class="fc" id="L18">        this.health = 100;</span>
+<span class="fc" id="L19">        defended = false;</span>
+<span class="fc" id="L20">    }</span>
+
+    @Override
+    public String getName() {
+<span class="fc" id="L24">        return name;</span>
+    }
+
+    @Override
+    public int getHealth() {
+<span class="fc" id="L29">        return health;</span>
+    }
+
+    @Override
+    public int getAttackPower() {
+<span class="fc" id="L34">        return attackPower;</span>
+    }
+
+    @Override
+    public boolean isUser() {
+<span class="fc" id="L39">        return false;</span>
+    }
+
+    @Override
+    public boolean isDefended() {
+<span class="fc" id="L44">        return defended;</span>
+    }
+
+    @Override
+    public boolean isAlive() {
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        return health&gt;0;</span>
+    }
+
+    @Override
+    public Optional&lt;Entity&gt; getInnerEntity() {
+<span class="fc" id="L54">        return Optional.empty();</span>
+    }
+
+    @Override
+    public EntityType getType() {
+<span class="fc" id="L59">        return type;</span>
+    }
+
+    @Override
+    public boolean containAnotherEntity() {
+<span class="fc" id="L64">        return false;</span>
+    }
+
+    @Override
+    public boolean containUserCharacter() {
+<span class="fc bfc" id="L69" title="All 4 branches covered.">        return getInnerEntity().filter(entity -&gt; entity.isUser()||entity.containUserCharacter()).isPresent();</span>
+    }
+
+    @Override
+    public boolean canContainAnotherEntity() {
+<span class="fc" id="L74">        return false;</span>
+    }
+
+    @Override
+    public void take(Entity anotherEntity) {
+<span class="fc" id="L79">        throw new UnsupportedOperationException(&quot;This method is not supported.&quot;);</span>
+    }
+
+
+    @Override
+    public boolean containTasks(Predicate&lt;Entity&gt; condition) {
+<span class="pc bpc" id="L85" title="2 of 4 branches missed.">        return condition.test(this) &amp;&amp; !isUser()</span>
+<span class="pc bnc" id="L86" title="All 2 branches missed.">                ||getInnerEntity().filter(entity -&gt; entity.containTasks(condition)).isPresent();</span>
+    }
+
+
+    @Override
+    public Entity findEntity(Predicate&lt;Entity&gt; condition) {
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        return getInnerEntity().map(entity -&gt; condition.test(entity)?entity:entity.findEntity(condition))</span>
+<span class="fc" id="L93">                .orElseThrow(()-&gt;new IllegalStateException(&quot;There is no entities with such condition&quot;));</span>
+    }
+
+    @Override
+    public void clear() {
+<span class="fc" id="L98">        throw  new UnsupportedOperationException(&quot;This operation is not supported&quot;);</span>
+    }
+
+    @Override
+    public int isBeatenBy(Entity anotherEntity) {
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (defended) {</span>
+<span class="fc" id="L104">            defended = false;</span>
+<span class="fc" id="L105">            return 0;</span>
+        }
+<span class="fc" id="L107">        int anotherEntityAttackPower = anotherEntity.getAttackPower();</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if(health&gt;= anotherEntityAttackPower){</span>
+<span class="fc" id="L109">            health = health - anotherEntityAttackPower;</span>
+<span class="fc" id="L110">            return anotherEntityAttackPower;</span>
+        }
+<span class="fc" id="L112">        int oldHealth = health;</span>
+<span class="fc" id="L113">        health = 0;</span>
+<span class="fc" id="L114">        return  oldHealth;</span>
+    }
+
+    @Override
+    public void relax() {
+<span class="fc" id="L119">        defended = false;</span>
+<span class="fc" id="L120">        getInnerEntity().ifPresent(Entity::relax);</span>
+<span class="fc" id="L121">    }</span>
+
+    @Override
+    public void defense() {
+<span class="fc" id="L125">        defended = true;</span>
+<span class="fc" id="L126">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ConsoleReader.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">puzzle</a> &gt; <a href="index.source.html" class="el_package">org.game.common.mvp.console.ui.utils</a> &gt; <span class="el_source">ConsoleReader.java</span></div><h1>ConsoleReader.java</h1><pre class="source lang-java linenums">package org.game.common.mvp.console.ui.utils;
+
+import java.util.Scanner;
+import java.util.function.Predicate;
+
+import static java.util.Objects.nonNull;
+
+<span class="nc" id="L8">public class ConsoleReader {</span>
+
+
+<span class="nc" id="L11">    private static final Predicate&lt;String&gt; NOT_BLANK =</span>
+<span class="nc bnc" id="L12" title="All 6 branches missed.">            text -&gt; nonNull(text) &amp;&amp; !text.isEmpty() &amp;&amp; text.chars().noneMatch(Character::isWhitespace);</span>
+
+<span class="nc" id="L14">    private static final Predicate&lt;String&gt; IS_NUMERIC =</span>
+<span class="nc bnc" id="L15" title="All 4 branches missed.">            text -&gt; nonNull(text) &amp;&amp; text.chars().allMatch(Character::isDigit);</span>
+
+<span class="nc bnc" id="L17" title="All 2 branches missed.">    private static final Predicate&lt;String&gt; NON_NEGATIVE = line -&gt; Integer.parseInt(line) &gt; 0;</span>
+
+<span class="nc" id="L19">    private static final Predicate&lt;String&gt; VALID_INPUT_DATA_CONDITION = NOT_BLANK.and(IS_NUMERIC).and(NON_NEGATIVE);</span>
+
+    public int readIntegerUntil(Predicate&lt;String&gt; userCondition, Runnable onFail) {
+<span class="nc" id="L22">        Predicate&lt;String&gt; retryCondition = VALID_INPUT_DATA_CONDITION.and(userCondition).negate();</span>
+<span class="nc" id="L23">        String line = null;</span>
+        do {
+<span class="nc bnc" id="L25" title="All 2 branches missed.">            if (nonNull(line)) {</span>
+<span class="nc" id="L26">                onFail.run();</span>
+            }
+<span class="nc" id="L28">            line = readString();</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        } while (retryCondition.test(line));</span>
+<span class="nc" id="L30">        return Integer.parseInt(line);</span>
+    }
+
+    private Scanner scanner() {
+<span class="nc" id="L34">        return new Scanner(System.in, &quot;UTF-8&quot;);</span>
+    }
+
+    public String readString() {
+<span class="nc" id="L38">        return scanner().nextLine();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

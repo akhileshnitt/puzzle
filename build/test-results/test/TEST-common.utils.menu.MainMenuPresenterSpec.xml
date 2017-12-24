@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="common.utils.menu.MainMenuPresenterSpec" tests="3" skipped="0" failures="0" errors="0" timestamp="2017-12-24T10:10:21" hostname="8c85904d6ba6" time="0.198">
+  <properties/>
+  <testcase name="presenter should be set as delegate into view during object creation" classname="common.utils.menu.MainMenuPresenterSpec" time="0.193"/>
+  <testcase name="new game should be started when user chooses start option" classname="common.utils.menu.MainMenuPresenterSpec" time="0.003"/>
+  <testcase name="old game should be resumed when user chooses resume option" classname="common.utils.menu.MainMenuPresenterSpec" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

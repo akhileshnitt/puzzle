@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.game.map.utils.IntRangeTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2017-12-24T10:10:22" hostname="8c85904d6ba6" time="0.008">
+  <properties/>
+  <testcase name="IllegalStateException is thrown when min value is grater than max value" classname="org.game.map.utils.IntRangeTest" time="0.007"/>
+  <testcase name="range should return #expectedResult when value is #value" classname="org.game.map.utils.IntRangeTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

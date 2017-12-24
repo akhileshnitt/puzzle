@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="map.entities.EntityFactorySpec" tests="8" skipped="0" failures="0" errors="0" timestamp="2017-12-24T10:10:22" hostname="8c85904d6ba6" time="0.036">
+  <properties/>
+  <testcase name="road should be created without inner entity" classname="map.entities.EntityFactorySpec" time="0.005"/>
+  <testcase name="road should be created with inner entity" classname="map.entities.EntityFactorySpec" time="0.005"/>
+  <testcase name="wolf should be created" classname="map.entities.EntityFactorySpec" time="0.003"/>
+  <testcase name="bear should be created" classname="map.entities.EntityFactorySpec" time="0.004"/>
+  <testcase name="tree should be created" classname="map.entities.EntityFactorySpec" time="0.004"/>
+  <testcase name="stone should be created" classname="map.entities.EntityFactorySpec" time="0.004"/>
+  <testcase name="user character should be created" classname="map.entities.EntityFactorySpec" time="0.005"/>
+  <testcase name=" character should be created" classname="map.entities.EntityFactorySpec" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
