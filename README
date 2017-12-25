@@ -8,3 +8,5 @@ Steps to execute:
    java -jar puzzle-1.0-SNAPSHOT.jar
 
    test results can be found at builds/reports/tests/test/index.html
+
+   For class diagram pls refer puzzle_final.pdf and puzzle_final.mdj
