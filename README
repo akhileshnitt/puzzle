@@ -1,1 +1,8 @@
 puzzle
+Steps to execute:
+
+1. cd to project dir
+    ./gradlew  clean build
+
+2. cd to build/libs
+   java -jar puzzle-1.0-SNAPSHOT.jar
