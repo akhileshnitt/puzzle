@@ -6,3 +6,5 @@ Steps to execute:
 
 2. cd to build/libs
    java -jar puzzle-1.0-SNAPSHOT.jar
+
+   test results can be found at builds/reports/tests/test/index.html
